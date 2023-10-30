@@ -90,7 +90,7 @@ def create_employee():
     job_title = input("Enter the employee's job title: ")
     department_id = input("Enter the employee's department id: ")
     try:
-        employee = Employee.create(name, job_title, department_id)
+        employee = Employee.create(name, job_title, int(department_id))
         print(f'Success: {employee}')
     except Exception as exc:
         print("Error creating employee: ", exc)
@@ -105,7 +105,7 @@ def update_employee():
             job_title = input("Enter the employee's job title: ")
             employee.job_title = job_title
             department_id = input("Enter the employee's department id: ")
-            employee.department_id = department_id
+            employee.department_id = int(department_id)
 
             employee.update()
             print(f'Success: {employee}')
@@ -125,4 +125,9 @@ def delete_employee():
 
 
 def list_department_employees():
-    pass
+    id_ = input("Enter the department id: ")
+    if dept := Department.find_by_id(id_):
+        e_list = dept.employees()
+        for e in e_list: print(e)
+    else: 
+        print(f"No employees found for Department {id_}")
